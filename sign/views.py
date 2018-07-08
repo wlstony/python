@@ -41,6 +41,7 @@ def login_action(request):
         #     return render(request, 'index.html', {"error":"username or password error!"})
 
 from django.contrib.auth.decorators import login_required
+
 @login_required
 def event_manage(request):
     # username = request.COOKIES.get("user", "")
