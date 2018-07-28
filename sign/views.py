@@ -85,6 +85,16 @@ def guest_manage(request):
             "user": username,
             "guests": contacts
         })
+@login_required
+def search_phone(request):
+    username = request.session.get("user", "")
+    phone = request.GET.get("phone", "")
+    contacts = Guest.objects.filter(phone__contains=phone)
+
+    return render(request, "guest_manage.html", {
+            "user": username,
+            "guests": contacts
+            })
 
 
 from django.shortcuts import render, get_object_or_404
@@ -99,8 +109,6 @@ def sign_index(request, eid):
 def sign_index_action(request, eid):
     event = get_object_or_404(Event, id=eid)
     phone = request.POST.get("phone", "")
-    print(phone)
-    print(eid)
 
     result = Guest.objects.filter(phone=phone)
     if not result:
